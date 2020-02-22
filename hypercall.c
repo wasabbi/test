@@ -598,11 +598,14 @@ void hypercall_manage_bp(CPUState *cpu){
             uint32_t tid2 __attribute__((unused)) = gettid();
             Logf("[%u]======__start_routine started======", tid2);
             if(cpu == CPU_go_first){
-                kvm_insert_breakpoint_per_cpu(cpu_arr[cpu->cpu_index], addr1);
+                kvm_insert_breakpoint_per_cpu(cpu, addr1);
+                Logf("[%u] Insert go_first bp:", tid);
             }else if(cpu == CPU_go_second){
-                kvm_insert_breakpoint_per_cpu(cpu_arr[cpu->cpu_index], addr2);
+                kvm_insert_breakpoint_per_cpu(cpu, addr2);
+                Logf("[%u] Insert go_sedond bp:", tid);
             }else if(cpu == CPU_go_third){
-                kvm_insert_breakpoint_per_cpu(cpu_arr[cpu->cpu_index], addr3);
+                kvm_insert_breakpoint_per_cpu(cpu, addr3);
+                Logf("[%u] Insert go_third bp:", tid);
             }else{
                 Logf("[%u] Insert ??? bp:", tid);
             }

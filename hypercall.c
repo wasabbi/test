@@ -525,18 +525,27 @@ void hypercall_manage_bp(CPUState *cpu){
                 addr1_next = 0;
                 CPU_go_first = cpu;
                 cpu->go_first = true;
+                Logf("[%u] Insert go_first bp:", tid);
+                Logf("[%u] hw_bp_addr: %llx", tid, addr1);
+                Logf("");
             }
             else if(sched == 2){
                 addr2 = hw_bp_addr;
                 addr2_next = 0;
                 CPU_go_second = cpu;
                 cpu->go_second = true;
+                Logf("[%u] Insert go_second bp:", tid);
+                Logf("[%u] hw_bp_addr: %llx", tid, addr2);
+                Logf("");
             }
             else if(sched == 3){
                 addr3 = hw_bp_addr;
                 addr3_next = 0;
                 CPU_go_third = cpu;
                 cpu->go_third = true;
+                Logf("[%u] Insert go_third bp:", tid);
+                Logf("[%u] hw_bp_addr: %llx", tid, addr3);
+                Logf("");
             }
             else{
                 Logf("[%u] sched is incorrect", tid);
@@ -590,19 +599,10 @@ void hypercall_manage_bp(CPUState *cpu){
             Logf("[%u]======__start_routine started======", tid2);
             if(cpu == CPU_go_first){
                 kvm_insert_breakpoint_per_cpu(cpu_arr[cpu->cpu_index], addr1);
-                Logf("[%u] Insert go_first bp:", tid);
-                Logf("[%u] hw_bp_addr: %llx", tid, addr1);
-                Logf("");
             }else if(cpu == CPU_go_second){
                 kvm_insert_breakpoint_per_cpu(cpu_arr[cpu->cpu_index], addr2);
-                Logf("[%u] Insert go_second bp:", tid);
-                Logf("[%u] hw_bp_addr: %llx", tid, addr2);
-                Logf("");
             }else if(cpu == CPU_go_third){
                 kvm_insert_breakpoint_per_cpu(cpu_arr[cpu->cpu_index], addr3);
-                Logf("[%u] Insert go_third bp:", tid);
-                Logf("[%u] hw_bp_addr: %llx", tid, addr3);
-                Logf("");
             }else{
                 Logf("[%u] Insert ??? bp:", tid);
             }
